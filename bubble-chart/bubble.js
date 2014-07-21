@@ -10,49 +10,8 @@ var BEVERAGES = [
 
 ////////// v code goes below   v  /////////////////////////////////////////////
 
-var bubble = d3.layout.pack()
-  .sort(null)
-  .size([800, 800])
-  .padding(1.5);
 
-var svg = d3.select('.bubble-chart')
-  .append('svg')
-  .attr('width', 800)
-  .attr('height', 800);
 
-var color = d3.scale.category10();
-
-function animate(data) {
-
-  var bubbleData = bubble.nodes({children: data})
-    .filter(function(d) { return !d.children; });
-
-  var node = svg.selectAll('.node')
-    .data(bubbleData, function(d) { return d.name; });
-
-  var enter = node.enter();
-  enter.append('circle')
-    .attr('class', 'node')
-    .attr('r', 0)
-    .style('fill', function(d) { return color(d.name); });
-
-  enter.append('text')
-    .attr('class', 'node')
-    .attr('r', 0)
-    .style('fill', 'lightgreen');
-
-  var update = node.transition();
-  update.attr('r' , function(d) { return d.r; })
-    .attr('cy', function(d) { return d.y; })
-    .attr('cx', function(d) { return d.x; });
-
-  var exit = node.exit();
-  exit.transition()
-    .attr('r', 0)
-    .remove();
-}
-
-animate(BEVERAGES);
 
 ////////// ^ code goes above  ^  /////////////////////////////////////////////
 
