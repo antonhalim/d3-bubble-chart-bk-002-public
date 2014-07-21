@@ -126,7 +126,7 @@ etc.
   .attr('cx', function(d,i) { return  100*i  + 100; })
 ```
 * Your brower should render circles similar to the ones below:
-![Circles rendered](../master/img/same-sized-circles.png "Same Sized Circles")
+![Circles rendered](../master/img/full-circles.png "Same Sized Circles")
 
 ### Accurately Relect Data
 * So far, the circles we've displayed don't really represent any data. Let's alter the circles' radius' so that they're reflections of the beverage's popularity value, or `value`.
@@ -137,7 +137,7 @@ etc.
   .attr('r', function(d) { return d.value; })
 ```
 * Your brower should render circles similar to the ones below:
-![Circles w/varied radiuses rendered](../master/img/different-sized-circles.png "Differently Sized Circles")
+![Circles w/varied radiuses rendered](../master/img/different-radiuses.png "Differently Sized Circles")
 
 ### Refactor
 * The next step will be to add update and exit code. Before that, however, it's time to refactor. 
@@ -153,7 +153,8 @@ var node = svg.selectAll('.node')
 ```
 
 * Call the method `animate` below it and pass it `BEVERAGES` as an argument: `animate(BEVERAGES);`
-* Make sure that this quick refactoring didn't break your cicles by checking in the browser. The circles should render just as they did before.
+* Make sure that this quick refactoring didn't break your cicles by checking in the browser. The circles should render just as they did before. The circles will animate a bit more and the final result should resemble that below:
+![Wrapped in Function](../master/img/wrap-in-function.png "wrapped in function")
 
 ### Exit
 * On the last line of your `animate` function, make a variable, `exit` and set it equal to `node.exit()`. This is so that when a particular drink is deleted from `BEVERAGES`, it's node disappears. To make that node disappear, call `.remove()` on it.
@@ -170,7 +171,7 @@ exit.remove();
 * In the `enter` section, hardcode the radius as zero. This way, circles will start out with a radius of 0, and grow to a fuller radius depending on their popularity value. It's not super important, just pretty.
 * See what this looks like in the browser! Cicles should be growing, shrinking, and disappearing altogether. Once the circles have stabalized, they should look like the ones below:
 
-![Animated](../master/img/animated-circles.png "Animated")
+![Update and Exit](../master/img/update-and-exit.png "update and exit")
 
 * You may notice that some circles may and also the huge gaps between smaller circles. You'll tackle these issues next using a feature that comes standard in the D3 library.
 
@@ -219,9 +220,7 @@ var bubbleData = bubble.nodes(treeLikeData).filter(function(d) { return !d.child
 ![Color](../master/img/color.png "color")
 
 ## Bonus
-* Add labels to the circles. See how you "appended" circles and think about appending text. To add two elements, a circle and text, creating a [group element](http://tutorials.jenkov.com/svg/g-element.html) to contain them is recommended.
-
-![labels added](/img/labels-added.png "labels")
+* Add labels to the circles. See how you "appended" circles and think about appending text. When you have two elements assoicated with a data point (in this case a circle and some text), creating a [group element](http://tutorials.jenkov.com/svg/g-element.html) to contain them is recommended.
 
 ## Conclusion
 D3 is an incredibly versatile library that visualizes data. Its built-in features allow programmers to render diagrams, charts, etc. on most browsers pretty quickly, considering their complexities. It has three main states: enter, update, and exit. In the enter phase, new data enters the DOM. In update, pre-existing representations of data are changed to reflect their new values. In exit, representations of data that no longer exists exit the DOM.  
