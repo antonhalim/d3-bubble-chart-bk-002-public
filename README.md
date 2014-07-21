@@ -1,7 +1,7 @@
 ---
 tags: D3, JavaScript library, data visualization, PhantomCSS
 language: JavaScript
-resources: 2
+resources: 4
 ---
 
 # Intro to D3.js with Bubble Charts
@@ -24,7 +24,7 @@ resources: 2
 ## Objectives
 * Get comfortable using a JavaScript library
 * Correctly require and use the [D3.js library](https://github.com/mbostock/d3/wiki)
-* Understand what an [SVG element](https://developer.mozilla.org/en-US/docs/Web/SVG) is and how to create one
+* Understand [SVG](http://css-tricks.com/using-svg/)s and how to use them
 * Understand how enter, update, and exit work
 * Create an animated bubble chart visualization using d3
 
@@ -43,14 +43,16 @@ resources: 2
   * Exit: removes items from a document when the data is no longer relevant/needed
 
 ### Getting Started
-* We're going to make a [bubble chart](http://bl.ocks.org/mbostock/4063269) representing fake data for beverage popularity. 
+* You're going to make a [bubble chart](http://bl.ocks.org/mbostock/4063269) representing fake data for beverage popularity.
+* Run `brew install casperjs --devel` from your terminal. CasperJS will be used for automated visual testing.
+* Write your JavaScript code in `bubble-chart/bubble.js` and alter HTML in `bubble-chart/index.html'. The rest of the folders are for the testing suite, so don't worry about them too much. If you're curious, check out the [PhantomCSS repo](https://github.com/Huddle/PhantomCSS).
 * Require the D3 library in `index.html`. Here's the url: `http://d3js.org/d3.v3.min.js`.
 * Below the code where you require the D3 library, require the JavaScript file where you will be implementing the visualizations. In the case of this lab, that file is called `bubble.js`.
 * To make sure you required the file properly, type `typeof BEVERAGES` into your browser's console. You should get "object" returned. If it returns "undefined", you probably didn't require the file correctly.
 * In you're browser's console, type `BEVERAGES`.
 * Still in the console, type `BEVERAGES[0]`.
 * Compare `BEVERAGES[0]` and `BEVERAGES[1]`. How are they simliar? How are they different?
-* The first step of D3 is to make an svg element in the page. Define a new variable in `bubble.js` called `svg`. Set it equal to `d3.select('body')`. You're then going to append an SVG element to `svg` by calling `.append('svg')` on it. Make sure the height and the width are 800. Your variable definition should look something like the code below:
+* The first step of D3 is to make an SVG element in the page. Define a new variable in `bubble.js` called `svg`. Set it equal to `d3.select('.bubble-chart')`. You're then going to append an SVG element by calling `.append('svg')` on it. Make sure the height and the width are 800. Your variable definition should look something like the code below:
 
 ```javascript
 var svg = d3.select('.bubble-chart')
@@ -224,3 +226,5 @@ D3 is an incredibly versatile library that visualizes data. Its built-in feature
 * [Mike Bostock's Blog](http://bost.ocks.org/mike/) - [Let's Make a Bar Chart](http://bost.ocks.org/mike/bar/)
 * [Mike Bostock's Blog](http://bost.ocks.org/mike/) - [Bubble Chart](http://bl.ocks.org/mbostock/4063269)
 * [Wikipedia](http://en.wikipedia.org/) - [D3.js](http://en.wikipedia.org/wiki/D3.js)
+* [CSS Tricks](http://css-tricks.com/) - [Using SVG](http://css-tricks.com/using-svg/)
+* [GitHub](https://github.com/) - [PhantomCSS](https://github.com/Huddle/PhantomCSS)
