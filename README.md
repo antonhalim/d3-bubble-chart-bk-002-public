@@ -220,7 +220,7 @@ var bubbleData = bubble.nodes(treeLikeData).filter(function(d) { return !d.child
 ![Color](../master/img/color.png "color")
 
 ## Bonus
-* Add labels to the circles. See how you "appended" circles and think about appending text. When you have two elements assoicated with a data point (in this case a circle and some text), creating a [group element](http://tutorials.jenkov.com/svg/g-element.html) to contain them is recommended.
+Add labels to the circles. See how you "appended" circles and think about appending text. When you have two elements assoicated with a data point (in this case a circle and some text), creating a [group element](http://tutorials.jenkov.com/svg/g-element.html) to contain them is recommended.
 
 ## Conclusion
 D3 is an incredibly versatile library that visualizes data. Its built-in features allow programmers to render diagrams, charts, etc. on most browsers pretty quickly, considering their complexities. It has three main states: enter, update, and exit. In the enter phase, new data enters the DOM. In update, pre-existing representations of data are changed to reflect their new values. In exit, representations of data that no longer exists exit the DOM.  
