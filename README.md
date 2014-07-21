@@ -156,17 +156,17 @@ var node = svg.selectAll('.node')
 * Make sure that this quick refactoring didn't break your cicles by checking in the browser. The circles should render just as they did before.
 
 ### Exit
-* Following the code where `node.enter` is called inside of the `animate` fuction, make a variable, `exit` and set it equal to `node.exit()`. This is so that when `wine`, or any other beverge really, is deleted from `BEVERAGES`, it's node disappears. To make that node disappear, call `.remove()` on it.
+* On the last line of your `animate` function, make a variable, `exit` and set it equal to `node.exit()`. This is so that when a particular drink is deleted from `BEVERAGES`, it's node disappears. To make that node disappear, call `.remove()` on it.
 
 ```javascript
 var exit = node.exit();
 exit.remove();
 ```
-* Check this out in the browser. The circle at the very bottom should completely disappear for a half-second before anther circle takes its spot.
+* Check this out in the browser. The circle on the far right completely disappear for a half-second before anther circle takes its spot.
 
 ### Update
 * It's time to make an `update` method that will adjust the radius to accurately resprent the data in the case that the data has changed since the circle was drawn.
-* Between where you call `node.enter()` and `node.exit()`, make a new variable called `update`. This variable will be equal to the value of calling `.transition()` on node, much like `enter` and `update` variables. Move  the `.attr('r'...`, `.attr('cy'...`, and the `.attr('cx'...` lines down into this update section.
+* Between where you call `node.enter()` and `node.exit()`, make a new variable called `update`. This variable will be equal to the value of calling `.transition()` on node, much like `enter` and `update` variables. Move  the `.attr('r'...` line down from the `enter` section into this new `update` section.
 * In the `enter` section, hardcode the radius as zero. This way, circles will start out with a radius of 0, and grow to a fuller radius depending on their popularity value. It's not super important, just pretty.
 * See what this looks like in the browser! Cicles should be growing, shrinking, and disappearing altogether. Once the circles have stabalized, they should look like the ones below:
 
