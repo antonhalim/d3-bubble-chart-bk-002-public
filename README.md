@@ -53,7 +53,7 @@ resources: 2
 * The first step of D3 is to make an svg element in the page. Define a new variable in `bubble.js` called `svg`. Set it equal to `d3.select('body')`. You're then going to append an SVG element to `svg` by calling `.append('svg')` on it. Make sure the height and the width are 800. Your variable definition should look something like the code below:
 
 ```javascript
-var svg = d3.select('body')
+var svg = d3.select('.bubble-chart')
   .append('svg')
   .attr('width', 800)
   .attr('height', 800);
