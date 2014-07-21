@@ -23,7 +23,8 @@ enter.append('circle')
   .attr('class', 'pretty-circle')
   .style('fill', 'lightgreen')
   .attr('r', 50)
-  .attr('cx', function(d,i) { return 100*i });
+  .attr('cx', function(d,i) { return 100*i })
+  .attr('cy', 100);
 
 ////////// ^ code goes above  ^  /////////////////////////////////////////////
 
