@@ -1,7 +1,7 @@
 ---
 tags: D3, JavaScript library, data visualization, PhantomCSS
 language: JavaScript
-resources: 4
+resources: 6
 ---
 
 # Intro to D3.js with Bubble Charts
@@ -42,10 +42,12 @@ resources: 4
   * Update: alters appearance of visualizations of existing data within a document when the data changes
   * Exit: removes items from a document when the data is no longer relevant/needed
 
+### Testing Suite
+* This lab relies on PhantomCSS for testing. All the code being tested, along with the testing file, can be found in the folder `bubble-chart`. All other folders are for the testing framework. Write your JavaScript code in `bubble-chart/bubble.js` and alter HTML in `bubble-chart/index.html'. If you're curious about PhantomCSS, check out its [ repo](https://github.com/Huddle/PhantomCSS).
+* Run `brew install casperjs --devel` from your terminal. PhantomCSS relies on CasperJS. Check out the [CasperJS docs](http://casperjs.org/) for more info.
+
 ### Getting Started
 * You're going to make a [bubble chart](http://bl.ocks.org/mbostock/4063269) representing fake data for beverage popularity.
-* Run `brew install casperjs --devel` from your terminal. CasperJS will be used for automated visual testing.
-* Write your JavaScript code in `bubble-chart/bubble.js` and alter HTML in `bubble-chart/index.html'. The rest of the folders are for the testing suite, so don't worry about them too much. If you're curious, check out the [PhantomCSS repo](https://github.com/Huddle/PhantomCSS).
 * Require the D3 library in `index.html`. Here's the url: `http://d3js.org/d3.v3.min.js`.
 * Below the code where you require the D3 library, require the JavaScript file where you will be implementing the visualizations. In the case of this lab, that file is called `bubble.js`.
 * To make sure you required the file properly, type `typeof BEVERAGES` into your browser's console. You should get "object" returned. If it returns "undefined", you probably didn't require the file correctly.
@@ -228,3 +230,4 @@ D3 is an incredibly versatile library that visualizes data. Its built-in feature
 * [Wikipedia](http://en.wikipedia.org/) - [D3.js](http://en.wikipedia.org/wiki/D3.js)
 * [CSS Tricks](http://css-tricks.com/) - [Using SVG](http://css-tricks.com/using-svg/)
 * [GitHub](https://github.com/) - [PhantomCSS](https://github.com/Huddle/PhantomCSS)
+* [CasperJS](http://casperjs.org/) - [Docs](http://casperjs.readthedocs.org/en/latest/)
