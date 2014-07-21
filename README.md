@@ -156,7 +156,7 @@ var node = svg.selectAll('.node')
 * Make sure that this quick refactoring didn't break your cicles by checking in the browser. The circles should render just as they did before.
 
 ### Exit
-* Following the code where `node.enter` is called inside of the `animate` fuction, make a variable, `exit` and set it equal to `node.exit()`. This is so that when `wine`, or any other beverge really, is deleted from `BEVERAGES`, it's node disappears. To make that node disappear, call `.remove()` on it.
+* On the last line of your `animate` function, make a variable, `exit` and set it equal to `node.exit()`. This is so that when a particular drink is deleted from `BEVERAGES`, it's node disappears. To make that node disappear, call `.remove()` on it.
 
 ```javascript
 var exit = node.exit();
