@@ -14,6 +14,9 @@ var BEVERAGES = [
 
 
 ////////// ^ code goes above  ^  /////////////////////////////////////////////
+function animate(data) {
+
+}
 
 setTimeout(function() {
   BEVERAGES[0].value = 90;            // changes value of tea to 100
