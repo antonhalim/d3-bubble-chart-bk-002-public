@@ -15,22 +15,20 @@ var svg = d3.select('.bubble-chart')
   .attr('width', 800)
   .attr('height', 800);
 
-var node = svg.selectAll('.node')
-  .data(BEVERAGES, function(d) { return d.name; });
+function animate(data) {
+  var node = svg.selectAll('.node')
+    .data(data, function(d) { return d.name; });
 
-var enter = node.enter();
-enter.append('circle')
-  .attr('class', 'pretty-circle')
-  .style('fill', 'lightgreen')
-  .attr('r', function(d) { return d.value })
-  .attr('cx', function(d,i) { return 100*i + 100})
-  .attr('cy', 100);
+  var enter = node.enter();
+  enter.append('circle')
+    .attr('class', 'pretty-circle')
+    .style('fill', 'lightgreen')
+    .attr('r', function(d) { return d.value })
+    .attr('cx', function(d,i) { return 100*i + 100})
+    .attr('cy', 100);
+}
 
 ////////// ^ code goes above  ^  /////////////////////////////////////////////
-
-function animate(data) {
-
-}
 
 setTimeout(function() {
   BEVERAGES[0].value = 90;            // changes value of tea to 100
