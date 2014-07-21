@@ -6,4 +6,4 @@ resources: 6
 
 # Intro to D3.js with Bubble Charts
 
-## 
+## Add Color Scheme
