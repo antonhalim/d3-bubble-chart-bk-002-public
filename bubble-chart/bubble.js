@@ -32,21 +32,31 @@ function animate(data) {
   var node = svg.selectAll('.node')
     .data(bubbleData, function(d) { return d.name; });
 
-  var enter = node.enter();
-  enter.append('circle')
+  var enter = node.enter().append('g')
     .attr('class', 'node')
-    .attr('r', 0)
-    .style('fill', function(d) { return color(d.name); });
+    .attr('transform', function(d) {return 'translate(' + d.x + ',' + d.y + ')'; });
+  enter.append('circle')
+    .style('fill', function(d) { return color(d.name); })
+    .attr('r' , 0);
+  enter.append('text')
+    .style('opacity', 1)
+    .style('fill', 'black')
+    .style('text-anchor', 'middle')
+    .text(function(d) { return d.name; });
 
-  var update = node.transition();
-  update.attr('r', function(d) { return d.r; })
-       .attr('cy', function(d) { return d.y; })
-       .attr('cx', function(d) { return d.x; });
+  var update = node.transition()
+    .attr('transform', function(d) {return 'translate(' + d.x + ',' + d.y + ')'; });
+  update.select('circle')
+      .attr('r' , function(d) { return d.r; });
+  update.select('text')
+      .style('opacity', 1);
 
-  var exit = node.exit();
-  exit.transition()
-    .attr('r', 0)
-    .remove();
+  var exit = node.exit()
+    .transition()
+      .remove();
+  exit.select('circle').attr('r', 0);
+  exit.select('text').style('opacity', 0);
+  
 }
 
 animate(BEVERAGES);
