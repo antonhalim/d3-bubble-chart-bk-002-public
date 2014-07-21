@@ -20,28 +20,34 @@ var bubble = d3.layout.pack()
     .size([800, 800])
     .padding(1.5);
 
+
 function animate(data) {
+
   var treeLikeData = {"children": data};
 
-  var bubbleData = bubble.nodes(treeLikeData).filter(function(d) { return !d.children; });
+  var bubbleData = bubble.nodes(treeLikeData)
+    .filter(function(d) { return !d.children; });
 
   var node = svg.selectAll('.node')
     .data(bubbleData, function(d) { return d.name; });
 
-  var enter = node.enter()
-    .append('circle')
-    .attr('class', 'node') 
-    .attr('r', 0) 
+  var enter = node.enter();
+  enter.append('circle')
+    .attr('class', 'node')
+    .attr('r', 0)
     .style('fill', 'lightgreen');
 
-  var update = node.transition()
-    .attr('r', function(d)  { return d.r; } )
-    .attr('cy', function(d) { return d.y; } )           
-    .attr('cx', function(d) { return d.x; } );
+  var update = node.transition();
+  update.attr('r', function(d) { return d.r; })
+       .attr('cy', function(d) { return d.y; })
+       .attr('cx', function(d) { return d.x; });
 
-  var exit = node.exit()
+  var exit = node.exit();
+  exit.transition()
     .remove();
 }
+
+animate(BEVERAGES);
 
 animate(BEVERAGES);
 ////////// ^ code goes above  ^  /////////////////////////////////////////////
