@@ -44,7 +44,7 @@ resources: 6
   * Exit: removes items from a document when the data is no longer relevant/needed
 
 ### Testing Suite
-* This lab relies on PhantomCSS for testing. All the code being tested, along with the testing file, can be found in the folder `bubble-chart`. All other folders are for the testing framework. Write your JavaScript code in `bubble-chart/bubble.js` and alter HTML in `bubble-chart/index.html'. If you're curious about PhantomCSS, check out its [ repo](https://github.com/Huddle/PhantomCSS).
+* This lab relies on PhantomCSS for testing. All the code being tested, along with the testing file, can be found in the folder `bubble-chart`. All other folders are for the testing framework. Write your JavaScript code in `bubble-chart/bubble.js` and alter HTML in `bubble-chart/index.html`. If you're curious about PhantomCSS, check out its [ repo](https://github.com/Huddle/PhantomCSS).
 * Run `brew install casperjs --devel` from your terminal. PhantomCSS relies on CasperJS. Check out the [CasperJS docs](http://casperjs.org/) for more info.
 * To run the tests, from the main folder `d3-bubble-chart`, enter `casperjs test bubble-chart/testsuite.js`.
 
