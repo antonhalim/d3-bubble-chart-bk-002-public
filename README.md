@@ -162,7 +162,7 @@ var node = svg.selectAll('.node')
 var exit = node.exit();
 exit.remove();
 ```
-* Check this out in the browser. The circle at the very bottom should completely disappear for a half-second before anther circle takes its spot.
+* Check this out in the browser. The circle on the far right completely disappear for a half-second before anther circle takes its spot.
 
 ### Update
 * It's time to make an `update` method that will adjust the radius to accurately resprent the data in the case that the data has changed since the circle was drawn.
