@@ -22,7 +22,7 @@ var enter = node.enter();
 enter.append('circle')
   .attr('class', 'pretty-circle')
   .style('fill', 'lightgreen')
-  .attr('r', function(d) { return d.value })
+  .attr('r', 50)
   .attr('cx', function(d,i) { return 100*i + 100})
   .attr('cy', 100);
 
