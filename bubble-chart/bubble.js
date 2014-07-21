@@ -22,8 +22,8 @@ var enter = node.enter();
 enter.append('circle')
   .attr('class', 'pretty-circle')
   .style('fill', 'lightgreen')
-  .attr('r', 50);
-
+  .attr('r', 50)
+  .attr('cx', function(d,i) { return 100*i });
 
 ////////// ^ code goes above  ^  /////////////////////////////////////////////
 
