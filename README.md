@@ -166,7 +166,7 @@ exit.remove();
 
 ### Update
 * It's time to make an `update` method that will adjust the radius to accurately resprent the data in the case that the data has changed since the circle was drawn.
-* Between where you call `node.enter()` and `node.exit()`, make a new variable called `update`. This variable will be equal to the value of calling `.transition()` on node, much like `enter` and `update` variables. Move  the `.attr('r'...` line down into this update section.
+* Between where you call `node.enter()` and `node.exit()`, make a new variable called `update`. This variable will be equal to the value of calling `.transition()` on node, much like `enter` and `update` variables. Move  the `.attr('r'...` line down from the `enter` section into this new `update` section.
 * In the `enter` section, hardcode the radius as zero. This way, circles will start out with a radius of 0, and grow to a fuller radius depending on their popularity value. It's not super important, just pretty.
 * See what this looks like in the browser! Cicles should be growing, shrinking, and disappearing altogether. Once the circles have stabalized, they should look like the ones below:
 
