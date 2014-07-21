@@ -20,6 +20,7 @@ var bubble = d3.layout.pack()
     .size([800, 800])
     .padding(1.5);
 
+var color = d3.scale.category10();
 
 function animate(data) {
 
@@ -35,7 +36,7 @@ function animate(data) {
   enter.append('circle')
     .attr('class', 'node')
     .attr('r', 0)
-    .style('fill', 'lightgreen');
+    .style('fill', function(d) { return color(d.name); });
 
   var update = node.transition();
   update.attr('r', function(d) { return d.r; })
