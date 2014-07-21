@@ -44,6 +44,7 @@ function animate(data) {
 
   var exit = node.exit();
   exit.transition()
+    .attr('r', 0)
     .remove();
 }
 
