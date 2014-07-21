@@ -10,10 +10,23 @@ var BEVERAGES = [
 
 ////////// v code goes below   v  /////////////////////////////////////////////
 
+var svg = d3.select('.bubble-chart')
+  .append('svg')
+  .attr('width', 800)
+  .attr('height', 800);
 
+var node = svg.selectAll('.node')
+  .data(BEVERAGES, function(d) { return d.name; });
+
+var enter = node.enter();
+enter.append('circle')
+  .attr('class', 'pretty-circle')
+  .style('fill', 'lightgreen')
+  .attr('r', 50);
 
 
 ////////// ^ code goes above  ^  /////////////////////////////////////////////
+
 function animate(data) {
 
 }
@@ -24,17 +37,12 @@ setTimeout(function() {
 }, 1000);
 
 setTimeout(function() {
-  BEVERAGES[2].value = 20;            // changes value of beer to 100
-  animate(BEVERAGES);
-}, 1000);
-
-setTimeout(function() {
   BEVERAGES[4].value = 3;            // changes value of coffe to 3
   animate(BEVERAGES);
 }, 1500);
 
 setTimeout(function() {
-  BEVERAGES.pop();                 // removes wine from JSON
+  BEVERAGES.pop();                 // removes wine
   animate(BEVERAGES);
 }, 2000);
 
