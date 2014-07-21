@@ -1,311 +1,226 @@
-**Huddle is Hiring!** We're always looking for talented Developers and Test Engineers. Visit http://www.huddle.com/careers for open vacancies now, or register your interest for the future.
+---
+tags: D3, JavaScript library, data visualization, PhantomCSS
+language: JavaScript
+resources: 2
+---
 
-PhantomCSS
-==========
+# Intro to D3.js with Bubble Charts
 
-**CSS regression testing**. A [CasperJS](http://github.com/n1k0/casperjs) module for automating visual regression testing with [PhantomJS](http://github.com/ariya/phantomjs/) and [Resemble.js](http://huddle.github.com/Resemble.js/). For testing Web apps, live style guides and responsive layouts. Read more on Huddle's Engineering blog: [CSS Regression Testing](http://tldr.huddle.com/blog/css-testing/).
+|Section| Sub-Section | 
+|:------:|:-------------:|
+|Overview| [Objectives](#objectives)| 
+|Instructions| [Intro to D3](#intro-to-d3js)| 
+|| [Getting Started](#getting-started)|
+|| [Enter](#enter)|
+|| [Accurately Relect Data](#accurately-relect-data)|
+|| [Refactor](#refactor)|
+|| [Exit](#exit)|
+|| [Update](#update)|
+|| [Fix Size and Positions](#fix-size-and-positions)|
+|| [Add Color](#add-color)|
+|Summary| [Conclusion](#conclusion)| 
+||[Resources](#resources)|
 
-### What?
+## Objectives
+* Get comfortable using a JavaScript library
+* Correctly require and use the [D3.js library](https://github.com/mbostock/d3/wiki)
+* Understand what an [SVG element](https://developer.mozilla.org/en-US/docs/Web/SVG) is and how to create one
+* Understand how enter, update, and exit work
+* Create an animated bubble chart visualization using d3
 
-PhantomCSS takes screenshots captured by CasperJS and compares them to baseline images using [Resemble.js](http://huddle.github.com/Resemble.js/) to test for rgb pixel differences. PhantomCSS then generates image diffs to help you find the cause.
+## Instructions
+### Intro to [D3.js](http://en.wikipedia.org/wiki/D3.js)
+* D3 stands for Data-Driven Documents
+* It is a JavaScript library that uses data to drive the creation of dynamic graphs, charts, etc. that which run in web browsers
+* If you read the New York Times online, Gawker, really any online publication, you're probably seen D3 in action. Here are some examples:
+  * [Four Ways to Slice Obama's Budget Proposal](http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html)
+  * [2013 Budget](http://www.brightpointinc.com/interactive/budget/index.html?source=d3js)
+  * [How the Facebook Offering Compares](http://www.nytimes.com/interactive/2012/05/17/business/dealbook/how-the-facebook-offering-compares.html)
+  * [2012 Electoral Map](http://elections.nytimes.com/2012/ratings/electoral-map)
+* For animations, D3 relies a simple pattern: enter, update, and exit.
+  * Enter: adds items to a document
+  * Update: alters appearance of visualizations of existing data within a document when the data changes
+  * Exit: removes items from a document when the data is no longer relevant/needed
 
-![A failed visual regression test, pink areas show where padding has changed.](https://raw.github.com/Huddle/PhantomCSS/master/readme_assets/intro-example.png "Failed visual regression test")
-
-Screenshot based regression testing can only work when UI is predictable. It's possible to hide mutable UI components with PhantomCSS but it would be better to test static pages or drive the UI with faked data during test runs.
-
-### Example
-
-```javascript
-casper.
-	start( url ).
-	then(function(){
-		
-		// do something
-		casper.click('button#open-dialog');
-		
-		// Take a screenshot of the UI component
-		phantomcss.screenshot('#the-dialog', 'a screenshot of my dialog');
-
-	});
-```
-
-From the command line/terminal run
-
-* `casperjs test demo/testsuite.js`
-
-### Download
-
-* `npm install phantomcss`
-* `bower install phantomcss`
-* `git clone git://github.com/Huddle/PhantomCSS.git`
-
-### Getting started, try the demo
-
-* Mac OSX users should first [install CasperJS 1.1-beta](http://docs.casperjs.org/en/latest/installation.html), easiest with Homebrew.  For convenience I've included CasperJS.bat for Windows users.
-* Download or clone this repo and run `casperjs test demo/testsuite.js` in command/terminal from the PhantomCSS folder.  PhantomJS is the only binary dependency - this should just work
-* Find the screenshot folder and have a look at the (baseline) images
-* Run the tests again with `casperjs test demo/testsuite.js`. New screenshots will be created to compare against the baseline images. These new images can be ignored, they will be replaced every test run.
-* To test failure, add/change some CSS in the file demo/coffeemachine.html e.g. make `.mug` bright green
-* Run the tests again, you should see some reported failures
-* In the failures folder some images should have been created. The images should show bright pink where the screenshot has visually changed
-* If you want to manually compare the images, go to the screenshot folder to see the original/baseline and latest screenshots
-
-### Options and setup
-
-```javascript
-phantomcss.init({
-	
-	libraryRoot: './modules/PhantomCSS',
-	
-	screenshotRoot: './screenshots',
-
-	/*
-		By default, failure images are put in the './failures' folder. If failedComparisonsRoot is set to false a seperate folder will not be created but failure images can still be found alongside the original and new images.
-	*/
-	failedComparisonsRoot: './failures',
-
-	/*
-		Remove results directory tree after run.  Use in conjunction with failedComparisonsRoot to see failed comparisons
-	*/
-	cleanupComparisonImages: true,
-
-	/*
-		You might want to keep master/baseline images in a completely different folder to the diffs/failures.  Useful when working with version control systems. By default this resolves to the screenshotRoot folder.
-	*/
-	comparisonResultRoot: './results'
-
-	/*
-		Don't add label to generated failure image
-	*/
-	addLabelToFailedImage: false,
-
-	/*
-		Mismatch tolerance defaults to  0.05%. Increasing this value will decrease test coverage
-	*/
-	mismatchTolerance: 0.05,
-
-	/*
-		Callbacks for your specific integration
-	*/
-	onFail: function(test){ console.log(test.filename, test.mismatch); },
-	
-	onPass: function(){ console.log(test.filename); },
-	
-	/* 
-		Called when creating new baseline images
-	*/
-	onNewImage: function(){ console.log(test.filename); },
-	
-	onTimeout: function(){ console.log(test.filename); },
-	
-	onComplete: function(allTests, noOfFails, noOfErrors){
-		allTests.forEach(function(test){
-			if(test.fail){
-				console.log(test.filename, test.mismatch);
-			}
-		});
-	},
-
-	/*
-		Change the output screenshot filenames for your specific integration
-	*/
-	fileNameGetter: function(root,filename){ 
-		// globally override output filename
-		// files must exist under root
-		// and use the .diff convention
-		var name = root+'/somewhere/'+filename;
-		if(fs.isFile(name+'.png')){
-			return name+'.diff.png';
-		} else {
-			return name+'.png';
-		}
-	},
-
-	/*
-		Output styles for image failure outputs genrated by Resemble.js
-	*/
-	outputSettings: {
-		errorColor: {
-			red: 255,
-			green: 255,
-			blue: 0
-		},
-		errorType: 'movement',
-		transparency: 0.3
-	}
-});
-
-/*
-	Turn off CSS transitions and jQuery animations
-*/
-phantomcss.turnOffAnimations();
-```
-
-### Don't like pink?
-
-![A failed visual regression test, yellow areas show where the icon has enlarged and pushed other elements down.](https://raw.github.com/Huddle/PhantomCSS/master/readme_assets/differentcolour.png "Failed visual regression test")
+### Getting Started
+* We're going to make a [bubble chart](http://bl.ocks.org/mbostock/4063269) representing fake data for beverage popularity. 
+* Require the D3 library in `index.html`. Here's the url: `http://d3js.org/d3.v3.min.js`.
+* Below the code where you require the D3 library, require the JavaScript file where you will be implementing the visualizations. In the case of this lab, that file is called `bubble.js`.
+* To make sure you required the file properly, type `typeof BEVERAGES` into your browser's console. You should get "object" returned. If it returns "undefined", you probably didn't require the file correctly.
+* In you're browser's console, type `BEVERAGES`.
+* Still in the console, type `BEVERAGES[0]`.
+* Compare `BEVERAGES[0]` and `BEVERAGES[1]`. How are they simliar? How are they different?
+* The first step of D3 is to make an svg element in the page. Define a new variable in `bubble.js` called `svg`. Set it equal to `d3.select('body')`. You're then going to append an SVG element to `svg` by calling `.append('svg')` on it. Make sure the height and the width are 800. Your variable definition should look something like the code below:
 
 ```javascript
-phantomcss.init({
-	/*
-		Output styles for image failure outputs genrated by Resemble.js
-	*/
-	outputSettings: {
-
-		/*
-			Error pixel color, RGB, anything you want, 
-			though bright and ugly works best!
-		*/
-		errorColor: {
-			red: 255,
-			green: 255,
-			blue: 0
-		},
-		
-		/*
-			ErrorType values include 'flat', or 'movement'.  
-			The latter merges error color with base image
-			which makes it a little easier to spot movement.
-		*/
-		errorType: 'movement',
-		
-		/*
-			Fade unchanged areas to make changed areas more apparent.
-		*/
-		transparency: 0.3
-	}
-});
+var svg = d3.select('body')
+  .append('svg')
+  .attr('width', 800)
+  .attr('height', 800);
 ```
-
-### There are different ways to take a screenshot
+* Back in the `bubble.js` file, define a variable `node` that binds BEVERAGES to SVG elements with the class `node` using their names as identifiers.
 
 ```javascript
-var delay = 10;
-var hideElements = 'input[type=file]';
-var screenshotName = 'the_dialog'
-
-phantomcss.screenshot( "#CSS .selector", screenshotName);
-
-// phantomcss.screenshot( "#CSS .selector" );
-// phantomcss.screenshot( "#CSS .selector", delay, hideElements, screenshotName);
-
-// phantomcss.screenshot({
-//   top: 100,
-//   left: 100,
-//   width: 500,
-//   height: 400
-// }, screenshotName);
+var node = svg.selectAll('.node')
+  .data(BEVERAGES, function(d) { return d.name; });
 ```
+* Double check that you created `node` properly by typing `node` in your browser's console. The result should resemble something like `[ Array[num] ]`.
 
-### Compare the images when and how you want
+### Enter
+* Now everything is set up, including the `node` variable, which is a collection of all SVG elements with the class `.node`. Each SVG element of the `.node` class corresponds with a beverage in this case.
+* Let's call `enter` on the variable `node` and set it equal to the variable `enter`. On this new `enter` variable, add a circle, fill that circle with the color light green, give it a radius of 50, and a class of `node`.
 
 ```javascript
-/*
-	String is converted into a Regular expression that matches on full image path
-*/
-phantomcss.compareAll('exclude.test'); 
+var enter = node.enter();
 
-// phantomcss.compareMatched('include.test', 'exclude.test');
-// phantomcss.compareMatched( new RegExp('include.test'), new RegExp('exclude.test'));
+enter.append('circle')
+  .attr('class', 'node')
+  .style('fill', 'lightgreen')
+  .attr('r', 50);
+```
+* Open `index.html` in your browser. There should be a small slice of keylime pie in the upper-left-hand corner of your screen:
 
-/*
-	Compare image diffs generated in this test run only
-*/
-// phantomcss.compareSession();
+![Pie Wedge](../master/img/pie-wedge.png "Pie Wedge")
 
-/*
-	Explicitly define what files you want to compare
-*/
-// phantomcss.compareExplicit(['/dialog.diff.png', '/header.diff.png']);
-
-/*
-	Get a list of image diffs generated in this test run
-*/
-// phantomcss.getCreatedDiffFiles();
-
-/*
-	Compare any two images, and wait for the results to complete
-*/
-// phantomcss.compareFiles(baseFile, diffFile);
-// phantomcss.waitForTests();
-
+* In your browser's console, type `node` just like you did in a prior step. Expand the details on the return value. It should look something like this:
+```
+Array[num]
+0: circle
+1: circle
+2: circle
+3: circle
+etc.
 ```
 
-### Best Practices
-
-##### Name your screenshots!
-
-By default PhantomCSS creates a file called screenshot_0.png, not very helpful.  You can name your screenshot by passing a string to either the second or forth parameter.
+* Okay, so are the circles are here, but the brower shows only a wedge of one. Why is this? Well, we never told the elements where they should be, so they all defaulted to the coordinates [0,0], which corresponds to the upper left hand corner. So there's seven circles overlapping each other in the upper-left-hand corner, resulting in this tiny pie piece. Let's fix this!
+* Change `x` position of each element (you could also choose to change the y coordinate) so that they're not overlapping. To accomplish this, rely on their index numbers multiplied by 100. Delete semicolon after `'lightgreen');` and make a new line. Add the code below there. 
 
 ```javascript
-var delay, hideElementsSelector;
-
-phantomcss.screenshot("#feedback-form", delay, hideElementsSelector, "Responsive Feedback Form");
-
-phantomcss.screenshot("#feedback-form", "Responsive Feedback Form");
-
+  .attr('cx', function(d,i) { return 100 * i; });
 ```
+* Now seven circles should render though most will be cut off in the middle and the top will only display 1/4 of itself resulting in a [scalloped pattern](http://images.meredith.com/sbe/images/2009/10/ss_cool-basics_13.jpg):
 
-Perhaps a better way is to use the ‘fileNameGetter’ callback property on the ‘init’ method. This does involve having a bit more structure around your tests.  See: https://github.com/Huddle/PhantomFlow/blob/master/lib/phantomCSSAdaptor.js#L41
 
-##### CSS3 selectors for testing
+![Scalloped](../master/img/scalloped.png "Scalloped") 
 
-Try not to use complex CSS3 selectors for asserting or creating screenshots.  In the same way that CSS should be written with good content/container separation, so should your test selectors be agnostic of location/context.  This might mean you need to add more ID's or data- attributes into your mark-up, but it's worth it, your tests will be more stable and more explicit.
-This is not a good idea:
+* Let's push them down by 100px so that we see more of their edges. Again, delete that semicolon after the line where you changed their `x` positions and add the line below.
 
 ```javascript
-phantomcss.screenshot("#sidebar li:nth-child(3) > div form");
+  .attr('cy', 100);
 ```
+* Now you should see many full circles and one circle cut off at the left edge:
 
-But this is:
+![One circle cut-off](../master/img/cut-off.png "One circle cut-off")
+
+* Let's push these circles right so that circle isn't obscured. To do this, you will alter the code where `cx` is set.
 
 ```javascript
-phantomcss.screenshot("#feedback-form");
+  .attr('cx', function(d,i) { return 100 * i; })
+  // should become
+  .attr('cx', function(d,i) { return  100*i  + 100; })
 ```
+* Your brower should render circles similar to the ones below:
+![Circles rendered](../master/img/same-sized-circles.png "Same Sized Circles")
 
-##### PhantomCSS should not be used to replace functional tests
-
-If you needed functional tests before, then you still need them.  Automated visual regression testing gives us coverage of CSS and design in a way we didn't have before, but that doesn't mean that conventional test assertions are now invalid.  Feedback time is crucial with test automation, the longer it takes the easier it is to ignore; the easier it is to ignore the sooner trust is lost from the team.  Unfortunately comparing images is not, and never will be as fast as simple DOM assertion.
-
-##### Don't try to test all the visuals
-
-I'd argue this applies to all automated testing approaches.  As a rule, try to maximise coverage with fewer tests.  This is a difficult balancing act because granular feedback/reporting is very important for debugging and build analysis. Testing many things in one assert/screenshot might tell you there is a problem, but makes it harder to get to the root of the bug.  As a CSS/HTML Dev you'll know what components are more fragile than others, which are reused and which aren't, concentrate your visual tests on these areas.
-
-##### Full page screenshots are a bad idea
-
-If you try to test too much in one screenshot then you could end up with lots of failing tests every time someone makes a small change.  Say you've set up full-page visual regression tests for your 50 page website, and someone adds 2px padding to the footer - that’s 50 failed tests because of one change.  It's better to test UI components individually; in this example the footer could have its own test.
-There is also a technical problem with this approach, the larger the image, the longer it takes to process.  An added pixel padding on the page body will offset everything, at best you'll have a sea of pink in the failed diff, at worse you'll get a TIMEOUT because it took too long to analyse.
-
-##### Scaling visual regression testing within a large team
-
-Scaling your test suite for many contributors may not be easy. [Resemble.js](http://huddle.github.com/Resemble.js/) (the core analysis engine of PhantomCSS) tries to consider image differences caused by different operating systems and graphics cards, but it's only so good, you are likely to see problems as more people contribute baseline screenshots.  You can mitigate this by hiding problematic elements such as select elements, file upload inputs etc. as so.
+### Accurately Relect Data
+* So far, the circles we've displayed don't really represent any data. Let's alter the circles' radius' so that they're reflections of the beverage's popularity value, or `value`.
 
 ```javascript
-phantomcss.screenshot("#feedback-form", undefined, 'input[type=file]');
+  .attr('r', 50)
+  // should become
+  .attr('r', function(d) { return d.value; })
+```
+* Your brower should render circles similar to the ones below:
+![Circles w/varied radiuses rendered](../master/img/different-sized-circles.png "Differently Sized Circles")
+
+### Refactor
+* The next step will be to add update and exit code. Before that, however, it's time to refactor. 
+* Delete the empty `animate` method below the `/// ^ code goes above  ^ ///` line. This `animate` function was just there to avoid console errors when updating the BEVERAGE object and you're about to build this function out yourself.
+* Wrap the code where `var node` is defined, along with the code where enter is called on `node`, and the code where `enter` is appended, etc., in the function called `animate`. This function, `animate`, will take an argument of `data`. Since it takes an argument, `data`, call on `data`, instead of `beverages` in your definition of the variable `node`.
+
+```javascript
+var node = svg.selectAll('.node')
+  .data(BEVERAGES, function(d) { return d.name; });
+// will become 
+var node = svg.selectAll('.node')
+  .data(data, function(d) { return d.name; });
 ```
 
-Below is an example of a false-negative caused by antialiasing differences on different machines. How can we solve this?  **Contributions welcome!**
+* Call the method `animate` below it and pass it `BEVERAGES` as an argument: `animate(BEVERAGES);`
+* Make sure that this quick refactoring didn't break your cicles by checking in the browser. The circles should render just as they did before.
 
-![Three images: baseline, latests and diff where antialiasing has caused the failed diff](https://raw.github.com/Huddle/PhantomCSS/master/readme_assets/false-negative.png "A False-negative?")
+### Exit
+* Following the code where `node.enter` is called inside of the `animate` fuction, make a variable, `exit` and set it equal to `node.exit()`. This is so that when `wine`, or any other beverge really, is deleted from `BEVERAGES`, it's node disappears. To make that node disappear, call `.remove()` on it.
 
-##### Scaling visual regression testing with Git
+```javascript
+var exit = node.exit();
+exit.remove();
+```
+* Check this out in the browser. The circle at the very bottom should completely disappear for a half-second before anther circle takes its spot.
 
-If your using a version control system like Git to store the baseline screenshots the repository size becomes increasingly relevant as your test suite grows.  I'd recommend using a tool like https://github.com/joeyh/git-annex or https://github.com/schacon/git-media to store the images outside of the repo.
+### Update
+* It's time to make an `update` method that will adjust the radius to accurately resprent the data in the case that the data has changed since the circle was drawn.
+* Between where you call `node.enter()` and `node.exit()`, make a new variable called `update`. This variable will be equal to the value of calling `.transition()` on node, much like `enter` and `update` variables. Move  the `.attr('r'...`, `.attr('cy'...`, and the `.attr('cx'...` lines down into this update section.
+* In the `enter` section, hardcode the radius as zero. This way, circles will start out with a radius of 0, and grow to a fuller radius depending on their popularity value. It's not super important, just pretty.
+* See what this looks like in the browser! Cicles should be growing, shrinking, and disappearing altogether. Once the circles have stabalized, they should look like the ones below:
 
-### ...You might also be interested in
+![Animated](../master/img/animated-circles.png "Animated")
 
-**[PhantomFlow](https://github.com/Huddle/PhantomFlow)** and **[grunt-phantomflow](https://github.com/Huddle/grunt-testflow)** wrap PhantomCSS and provides an experimental way of describing and visualising user flows through tests with CasperJS. As well as providing a terse readable structure for UI testing, it also produces intriguing graph visualisations that can be used to present PhantomCSS screenshots and failed diffs.  We're actively using it at Huddle and it's changing the way we think about UI for the better.
+* You may notice that some circles may and also the huge gaps between smaller circles. You'll tackle these issues next using a feature that comes standard in the D3 library.
 
-Also, take a look at [PhantomXHR](http://github.com/Huddle/PhantomXHR) for stubbing and mocking XHR requests. Isolated UI testing IS THE FUTURE!
+### Fix Size and Positions
+* Trying to think of x and y coordinates that would maximize the beauty of this chart without exceeding a specified width and height is tricky and involves a lot of math. Thankfully, D3 provides a solution, called the [pack layout](https://github.com/mbostock/d3/wiki/Pack-Layout). The pack layout will calculate the ideal coordinates and radius values for each beverage. It is awesome.
+* Above the `animate` function, make a variable, `bubble`. It will be equal to [d3.layout.pack](https://github.com/mbostock/d3/wiki/Pack-Layout#pack). It should have a [size](https://github.com/mbostock/d3/wiki/Pack-Layout#size) of 800 by 800, a [padding](https://github.com/mbostock/d3/wiki/Pack-Layout#padding) of 1.5, and not [sort](https://github.com/mbostock/d3/wiki/Pack-Layout#sort) the data coming in (bubble.sort = null). If you need help, take a look at the `bubble` variable in [mbostock's bubble code](http://bl.ocks.org/mbostock/4063269#index.html). Your variable should be pretty similar.
+* What you want to do bind each drink with the computed data that the pack layout will assign to it, like values for the x and y coordinates along with values for a radius. The only annoying thing is that the pack layout expects a tree-like data structure so you're going to fake it till you make it. Create an object called `treeLikeData` in the first line of your `animate` function. This variable will have a key of "children" which will point to a value of `data`, (which is `BEVERAGES` in this case).
 
-### Huddle Careers
+```javascript
+var treeLikeData = {"children": data};
+```
+* Define a new variable `bubbleData` in the line just below where `var treeLikeData` is. This new variable `bubbleData` will be equal to calling `.nodes` on the variable `bubble` that you created outside of the animate function. Passing `.nodes` the argument of `treeLikeData`. 
 
-Huddle strongly believe in innovation and give you 20% of work time to spend on innovative projects of your choosing.
+```javascript
+var bubbleData = bubble.nodes(treeLikeData);
+```
 
-If you like what you see and would like to work on this kind of stuff for a job then get in touch.
+* Now you need to filter out any data that has children. This is neccessary because you made a parent, the main object `treeLikeData`. This parent has the key of "chidren" and a value of an array of all the beverages. You don't want D3 to assign this overarching parent an x, y, and radius. In fact, once you've completed this lab, remove the `.filter` and see what happens.
 
-Visit http://www.huddle.com/careers for open vacancies now, or register your interest for the future.
+```javascript
+var bubbleData = bubble.nodes(treeLikeData);
+// should become
+var bubbleData = bubble.nodes(treeLikeData).filter(function(d) { return !d.children; });
+```
 
---------------------------------------
+* Make sure that you update the code when defining `node` to reflect the changes above: `BEVERAGES` should become `bubbleData`.
 
-PhantomCSS was created by [James Cryer](http://github.com/jamescryer) and the Huddle development team.
+```javascript
+.data(BEVERAGES.children, function(d) { return d.name; });
+// should become
+.data(bubbleData, function(d) { return d.name; })
+```
+* To access D3's representation of each beverage, you can call `d`. To find D3's calculations of the ideal radius and x and y coordinates, you can call `d.r`, `d.x`, and `d.y` respectively. For example, to make use of D3's calculated `y` value, replace your older `cy` code with:
+
+```javascript
+.attr('cy', function(d) { return d.y; })
+```
+* Using the code above as an example, update `cx` and `r` in the transition section using D3's calculated x coordinate and calculated radius. Your result should look like the freeze-frame below:
+
+![Pack layout](../master/img/pack-layout.png "Pack layout")
+
+### Add color
+* Above the `animate` function, define a new variable `color`. Set it equal to `d3.scale.category10();`. See [this link](https://github.com/mbostock/d3/wiki/Ordinal-Scales#category10) for more information on constructing colors.
+* Alter the fill from to `.style('fill', "lightblue")` to `.style('fill', function(d) { return color(d.name); });` This means colors will be assigned based on name, which is cool. For instance, if tea was blue and popular, then became so unpopular that it was removed from BEVERAGES, and then made a comeback, it's color would still remain blue. How cool is that?
+
+![Color](../master/img/color.png "color")
+
+## Bonus
+* Add labels to the circles. See how you "appended" circles and think about appending text. To add two elements, a circle and text, creating a [group element](http://tutorials.jenkov.com/svg/g-element.html) to contain them is recommended.
+
+![labels added](/img/labels-added.png "labels")
+
+## Conclusion
+D3 is an incredibly versatile library that visualizes data. Its built-in features allow programmers to render diagrams, charts, etc. on most browsers pretty quickly, considering their complexities. It has three main states: enter, update, and exit. In the enter phase, new data enters the DOM. In update, pre-existing representations of data are changed to reflect their new values. In exit, representations of data that no longer exists exit the DOM.  
+
+## Resources
+* [Mike Bostock's Blog](http://bost.ocks.org/mike/) - [Let's Make a Bar Chart](http://bost.ocks.org/mike/bar/)
+* [Mike Bostock's Blog](http://bost.ocks.org/mike/) - [Bubble Chart](http://bl.ocks.org/mbostock/4063269)
+* [Wikipedia](http://en.wikipedia.org/) - [D3.js](http://en.wikipedia.org/wiki/D3.js)
