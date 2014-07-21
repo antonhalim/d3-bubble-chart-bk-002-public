@@ -16,18 +16,26 @@ var svg = d3.select('.bubble-chart')
   .attr('height', 800);
 
 function animate(data) {
+
   var node = svg.selectAll('.node')
     .data(data, function(d) { return d.name; });
 
-  var enter = node.enter();
-  enter.append('circle')
-    .attr('class', 'pretty-circle')
-    .style('fill', 'lightgreen')
-    .attr('r', function(d) { return d.value })
-    .attr('cx', function(d,i) { return 100*i + 100})
-    .attr('cy', 100);
+  var enter = node.enter()
+    .append('circle')
+    .attr('class', 'node')
+    .attr('cy', 100)           
+    .attr('cx', function(d,i) { return 100*i + 100; }) 
+    .attr('r', 0)
+    .style('fill', 'lightgreen');
+
+  var update = node.transition()
+    .attr('r', function(d) { return d.value; });
+
+  var exit = node.exit()
+    .remove();
 }
 
+animate(BEVERAGES);
 ////////// ^ code goes above  ^  /////////////////////////////////////////////
 
 setTimeout(function() {
