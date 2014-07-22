@@ -5,7 +5,7 @@ resources: 6
 ---
 
 # Bubble Chart in D3.js Tutorial
-
+### Contents
 |Section| Sub-Section | 
 |:------:|:-------------:|
 |[Overview](#overview)| ||
