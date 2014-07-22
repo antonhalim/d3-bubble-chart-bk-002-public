@@ -1,16 +1,18 @@
 ---
-tags: D3, JavaScript library, data visualization, PhantomCSS
+tags: D3, JavaScript library, data visualization, PhantomCSS, tutorial
 language: JavaScript
 resources: 6
 ---
 
-# Intro to D3.js with Bubble Charts
+# Bubble Chart in D3.js Tutorial
 
 |Section| Sub-Section | 
 |:------:|:-------------:|
-|Overview| [Objectives](#objectives)| 
-|Instructions| [Intro to D3](#intro-to-d3js)| 
+|[Overview](#overview)| ||
+|| [Objectives](#objectives)| 
+|| [Intro to D3](#intro-to-d3js)| 
 || [Testing Suite](#testing-suite)
+|[Instructions](#instructions)||
 || [Getting Started](#getting-started)|
 || [Enter](#enter)|
 || [Accurately Relect Data](#accurately-relect-data)|
@@ -19,17 +21,20 @@ resources: 6
 || [Update](#update)|
 || [Fix Size and Positions](#fix-size-and-positions)|
 || [Add Color](#add-color)|
-|Summary| [Conclusion](#conclusion)| 
-||[Resources](#resources)|
+|| [Bonus](#bonus)|
+|[Summary](#summary)||
+|| [Conclusion](#conclusion)| 
+|| [Resources](#resources)|
 
-## Objectives
+## Overview
+
+### Objectives
 * Get comfortable using a JavaScript library
 * Correctly require and use the [D3.js library](https://github.com/mbostock/d3/wiki)
 * Understand [SVG](http://css-tricks.com/using-svg/)s and how to use them
 * Understand how enter, update, and exit work
 * Create an animated bubble chart visualization using d3
 
-## Instructions
 ### Intro to [D3.js](http://en.wikipedia.org/wiki/D3.js)
 * D3 stands for Data-Driven Documents
 * It is a JavaScript library that uses data to drive the creation of dynamic graphs, charts, etc. that which run in web browsers
@@ -44,19 +49,19 @@ resources: 6
   * Exit: removes items from a document when the data is no longer relevant/needed
 
 ### Testing Suite
-* This lab relies on PhantomCSS for testing. All the code being tested, along with the testing file, can be found in the folder `bubble-chart`. All other folders are for the testing framework. Write your JavaScript code in `bubble-chart/bubble.js` and alter HTML in `bubble-chart/index.html`. If you're curious about PhantomCSS, check out its [ repo](https://github.com/Huddle/PhantomCSS).
+* This lab relies on PhantomCSS for testing. PhantomCSS takes a picture of the bar-chart div and compares it to a picture of the completed bar chart. If the pictures are somewhat similar, it then reports back about the percentage of difference. Screenshots are saved to the `screenshots` folder and failures are saved to the `failures` folder. Comparision images have `diff` in their name with differences displayed in pink. If you want to learn more about PhantomCSS, check out its [repo](https://github.com/Huddle/PhantomCSS).
+* All the code being tested, along with the testing file, can be found in the folder `bubble-chart`. All other folders are for the testing framework. Write your JavaScript code in `bubble-chart/bubble.js` and alter HTML in `bubble-chart/index.html`. If you're curious about PhantomCSS, check out its [ repo](https://github.com/Huddle/PhantomCSS).
 * Run `brew install casperjs --devel` from your terminal. PhantomCSS relies on CasperJS. Check out the [CasperJS docs](http://casperjs.org/) for more info.
 * To run the tests, from the main folder `d3-bubble-chart`, enter `casperjs test bubble-chart/testsuite.js`.
 
+## Instructions
+
 ### Getting Started
 * You're going to make a [bubble chart](http://bl.ocks.org/mbostock/4063269) representing fake data for beverage popularity.
-* Require the D3 library in `index.html`. Here's the url: `http://d3js.org/d3.v3.min.js`.
+* The first step is to require the D3 library in `index.html`. Here's the url: `http://d3js.org/d3.v3.min.js`. Type `d3` into your browser's console when you open `index.html` if you'd like to double-check that you required it correctly.
 * Below the code where you require the D3 library, require the JavaScript file where you will be implementing the visualizations. In the case of this lab, that file is called `bubble.js`.
-* To make sure you required the file properly, type `typeof BEVERAGES` into your browser's console. You should get "object" returned. If it returns "undefined", you probably didn't require the file correctly.
-* In you're browser's console, type `BEVERAGES`.
-* Still in the console, type `BEVERAGES[0]`.
-* Compare `BEVERAGES[0]` and `BEVERAGES[1]`. How are they simliar? How are they different?
-* The first step of D3 is to make an SVG element in the page. Define a new variable in `bubble.js` called `svg`. Set it equal to `d3.select('.bubble-chart')`. You're then going to append an SVG element by calling `.append('svg')` on it. Make sure the height and the width are 800. Your variable definition should look something like the code below:
+* To make sure you required the file properly, type `BEVERAGES` into your browser's console. You should get an object returned. If it returns "undefined", you probably didn't require the file correctly.
+* The next step of making a bubble chart with D3 is to make an SVG element on the page. Define a new variable in `bubble.js` called `svg`. Set it equal to `d3.select('.bubble-chart')`. You're then going to append an SVG element by calling `.append('svg')` on it. Make sure the height and the width are 800. Your variable definition should look something like the code below:
 
 ```javascript
 var svg = d3.select('.bubble-chart')
@@ -219,13 +224,15 @@ var bubbleData = bubble.nodes(treeLikeData).filter(function(d) { return !d.child
 
 ![Color](../master/img/color.png "color")
 
-## Bonus
+### Bonus
 Add labels to the circles. See how you "appended" circles and think about appending text. When you have two elements assoicated with a data point (in this case a circle and some text), creating a [group element](http://tutorials.jenkov.com/svg/g-element.html) to contain them is recommended.
 
-## Conclusion
+## Summary
+
+### Conclusion
 D3 is an incredibly versatile library that visualizes data. Its built-in features allow programmers to render diagrams, charts, etc. on most browsers pretty quickly, considering their complexities. It has three main states: enter, update, and exit. In the enter phase, new data enters the DOM. In update, pre-existing representations of data are changed to reflect their new values. In exit, representations of data that no longer exists exit the DOM.  
 
-## Resources
+### Resources
 * [Mike Bostock's Blog](http://bost.ocks.org/mike/) - [Let's Make a Bar Chart](http://bost.ocks.org/mike/bar/)
 * [Mike Bostock's Blog](http://bost.ocks.org/mike/) - [Bubble Chart](http://bl.ocks.org/mbostock/4063269)
 * [Wikipedia](http://en.wikipedia.org/) - [D3.js](http://en.wikipedia.org/wiki/D3.js)
